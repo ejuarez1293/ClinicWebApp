@@ -1,0 +1,45 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+<!-- polyfiller file to detect and load polyfills -->
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+
+<h1>Add bill </h1>
+      {% if registered %}
+        <h1>Bill has been entered!</h1>
+      {% else %}
+      <div class="container">
+         <form method="POST" class="post-form">
+            {% csrf_token %}
+             <p>Date: {{bill_form.date}}</p>
+             <p>Patient: {{bill_form.patient}}</p>
+             <p>Procedure: {{bill_form.procedure}}</p>
+             <p>Doctor: {{bill_form.doctor}}</p>
+             <p>Amount: {{bill_form.amount}}</p>
+            <input type="submit"  class="save btn btn-default" value="Enter" >
+          </form>
+        </div>
+
+{%endif%}
+
+<script>
+    $(document).ready(function(){
+        var date_input=$('input[name="date"]'); //our date input has the name "date"
+        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        var optionsDate={
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+            startDate: '+0d',
+      };
+        date_input.datepicker(optionsDate);
+    })
+
+</script>
+
+
+{%endblock%}

@@ -1,0 +1,31 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+
+  <div class="container">
+    <div class="jumbotron">
+
+        <h1>Add Prescription</h1>
+        <h3>Enter as needed:</h3>
+
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+            <p>Date: {{ prescription_form.date }} </p>
+        <p> Patient: {{ prescription_form.patient}}</p>
+        <p> Doctor: {{ prescription_form.doctor}}</p>
+        <p> Medication: {{ prescription_form.medication }} </p>
+        <p> Quantity: {{ prescription_form.quantity }} </p>
+        <p> Duration: {{ prescription_form.length }} </p>
+        <p> Dosage: {{ prescription_form.dosage }} </p>
+        <p> Refill Count:{{ prescription_form.refill_count }} </p>
+
+          <button type="submit" class="save btn btn-default">save</button>
+        </form>
+
+
+
+    </div>
+
+  </div>
+
+{% endblock %}

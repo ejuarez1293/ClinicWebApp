@@ -1,0 +1,64 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+
+      {% if request.user.is_staff %}
+      <form method="POST" class="post-form">
+      {% csrf_token %}
+      <p>Patient ID: {{form.patientID}}</p>
+      <button type="submit" class="save btn btn-default">Look up</button>
+      {% endif %}
+
+
+      {% for medicalRecord in medicalCharts %}
+        <table style="background-color: white" class="table table-bordered">
+            <tr>
+              <td width="40%" colspan="2">Name: {{medicalRecord.patient.firstname}} {{medicalRecord.patient.lastname}}</td>
+              <td width="40%" colspan="2">DOB: {{medicalRecord.patient.dateOfBirth}}</td>
+            </tr>
+
+            <tr>
+              <td colspan="3">Doctor: {{medicalRecord.doctor}}</td>
+              <td colspan="3">Date: {{medicalRecord.date}}</td>
+            </tr>
+
+            <tr>
+              <td width="20%" > Height: {{medicalRecord.height}} </td>
+              <td colspan="5" rowspan="7"> Additional Notes: </br> {{medicalRecord.additionalNotes}}
+            </tr>
+
+            <tr>  
+              <td> Weight: {{medicalRecord.weight}} </td>
+            </tr>
+              
+            <tr>  
+              <td> Temperature: {{medicalRecord.temperature}} </td>
+            </tr>
+              
+            <tr>  
+              <td> Pulse: {{medicalRecord.pulse}} </td>
+            </tr>
+              
+            <tr>  
+              <td> Blood Pressure: {{medicalRecord.pulse}} </td>
+            </tr>
+
+            <tr>  
+              <td height="400px"> Reason For Visit: </br> {{medicalRecord.reason_for_visit}} </td>
+            </tr>
+        </table>
+
+
+
+
+
+
+
+
+      {% endfor %}
+
+    </div>
+  </div>
+{% endblock %}

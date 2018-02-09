@@ -1,0 +1,60 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+{% csrf_token %}
+{% if user.is_authenticated %}
+<div class="container">
+	<div class="page-header">
+		<h1>Billing Log</h1>
+	</div>
+</div>
+
+	{% if request.user.is_staff%}
+	<div class ="container">
+		<h2> Look Up</h2>
+			<form method="POST" action="/LookUpBill/" class="post-form">
+        	{% csrf_token %}
+        	<input type="number" name="patientID">
+        	<button type="submit" class="save btn btn-default">Look up</button>
+			</form>
+	</div>
+
+	<div class="container">
+		<h2>Add Bill</h2>
+			<form action="/postBill/" method ="GET">
+			{% csrf_token %}
+			<button type="submit"  class="save btn btn-default">Enter Bill</button>
+			<br>
+			<br>
+	</div>
+	<br><br>
+
+	{% endif %}
+			<div class="container">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+			       			<th width="5%">ID</th>
+							<th width="20%">Name</th>
+							<th width="25">Procedure</th>
+							<th width="12%">Date</th>
+							<th width="20%">Doctor</th>
+							<th width="20%">Amount</th>
+						</tr>
+					</thead>
+						{% for billingLog in billingLogs %}
+						<tr>
+	              			<th scope="row">{{billingLog.patient.id}}</th>
+	             			<td>{{billingLog.patient.firstname}} {{billingLog.patient.lastname}}</td>
+							<td>{{billingLog.procedure}}</td>
+	              			<td>{{billingLog.date}}</td>
+	              			<td>{{billingLog.doctor}}</td>
+	              			<td>{{billingLog.amount}}</td>
+	            		</tr>
+	            		{% endfor %}
+				</table>
+			</div>
+{% endif %}
+
+{% endblock%}
+

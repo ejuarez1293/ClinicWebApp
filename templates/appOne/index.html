@@ -1,0 +1,57 @@
+{% extends "appOne/base.html" %}
+{% block body_block %}
+
+<!--Background Color-->
+<body style="background-color:blanchedalmond;">
+
+
+
+
+<!--HTML code for Homepage-->
+<div id ="wrapp">
+
+    <div id ="header">
+         <h1 class="text-center"><img src= "static/banner.png"></h1>
+    </div>
+
+    <div id ="content">
+        <div id="main_content"><img src= "static/doc1.png" width="100%"></div>
+
+        {% if not user.is_authenticated %}
+        <div id="loginDiv">
+
+            <p>
+             <div id="formBox">
+                 <img class="login" src="static/login.png"height="100px" width="100px">
+                 <form method = "post" action=".">
+                {% csrf_token %}
+             <p class="login">{{ form }}</p>
+             <p class="blogin"><center><input type="submit" value="Sign In" class="btn btn-info"></center></p>
+        </form>
+      </div>
+        </p>
+
+       <div id ="registerBox">
+           <form>
+               <p><Strong>New User?</Strong></p>
+
+               <p class="login"><a href="{% url 'appOne:register' %}" class = "btn btn-info" role="button">Sign Up Now!</a></p>
+           </form>
+        </div>
+        </div>
+        <div class="clear">
+    </div>
+
+    <div id ="footer">
+
+</div>
+
+    </div>
+
+</div>
+    </div>
+
+</body>
+</html>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+
+  <div class="container">
+    <div class="jumbotron">
+        <h1>Add Insurance</h1>
+        <h3>Enter as needed:</h3>
+
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+
+        <p> Patient: {{ ins_form.patient}}</p>
+        <p> Company Name: {{ ins_form.companyName }} </p>
+        <p> Phone Number: {{ ins_form.contactNum }} </p>
+        <p> Insurance ID: {{ ins_form.insID }} </p>
+        <p> Insurance Network: {{ ins_form.insNetwork }} </p>
+
+          <input type="submit" name="">
+        </form>
+
+
+
+    </div>
+
+  </div>
+
+{% endblock %}

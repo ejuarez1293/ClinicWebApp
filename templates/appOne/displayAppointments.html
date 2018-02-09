@@ -1,0 +1,50 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+
+
+        {% for appointment in appointments %}
+          {% ifchanged appointment.date %}
+              </tbody>
+      </table>
+      <table class="table table-bordered table-striped">
+        <caption>{{ appointment.date|date:"l, F d, o" }}</caption>
+          <thead>
+            <tr>
+            <th width="5%">ID</th>
+            <th width="20%">Name</th>
+            <th width="12%">Date</th>
+            <th width="10%">Time</th>
+            <th width="20%">Doctor</th>
+            <th>Comments</th>
+          </tr>
+          <tbody>
+          </thead>
+            <tr>
+              <th scope="row">{{appointment.patient.id}}</th>
+              <td>{{appointment.patient.firstname}} {{appointment.patient.lastname}}</td>
+              <td>{{appointment.date}}</td>
+              <td>{{appointment.time|time:"g:i A"}}</td>
+              <td>{{appointment.doctor}}</td>
+              <td>{{appointment.comments}}</td>
+            </tr>
+          {% else %}
+            <tr>
+              <th scope="row">{{appointment.patient.id}}</th>
+              <td>{{appointment.patient.firstname}} {{appointment.patient.lastname}}</td>
+              <td>{{appointment.date}}</td>
+              <td>{{appointment.time|time:"g:i A"}}</td>
+              <td>{{appointment.doctor}}</td>
+              <td>{{appointment.comments}}</td>
+            </tr>
+          {% endifchanged %}
+
+        {% endfor %}
+
+    </div>
+  </div>
+{% endblock %}
+
+

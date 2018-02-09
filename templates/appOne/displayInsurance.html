@@ -1,0 +1,39 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+
+{% if user.is_authenticated %}
+	<div class="page-header">
+		<h1>Insurance Information</h1>
+	</div>
+
+			<div class="container">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+			       			<th width="5%">ID</th>
+	        				<th width="20%">Name</th>
+	            			<th width="12%">Doctor</th>
+	            			<th width="20%">Insurance Name</th>
+	            			<th width="20%">Insurance ID</th>
+                            <th width="20%">Contact Number</th>
+						</tr>
+					</thead>
+						{% for insurances in insurance %}
+						<tr>
+	              			<th scope="row">{{insurances.patient.id}}</th>
+	             			<td>{{insurance.patient.firstname}} {{insurance.patient.lastname}}</td>
+	              			<td>{{insurance.doctor}} </td>
+							<td>{{insurance.companyName}}</td>
+							<td>{{insurance.insID}}</td>
+							<td>{{insurance.contactNum}}</td>
+	            		</tr>
+	            		{% endfor %}
+				</table>
+			</div>
+
+	{% endif %}
+{% endif %}
+
+{% endblock%}
+

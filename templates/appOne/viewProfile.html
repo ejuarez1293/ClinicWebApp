@@ -1,0 +1,97 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+
+
+
+{% block body_block %}
+{% csrf_token %}
+{% if user.is_authenticated %}
+    <div class="page-header">
+        <h1>Welcome, {{ user.get_username }} </h1>
+    </div>
+
+
+    {% if request.user.is_staff %}
+        <form method="POST" class="post-form">
+        {% csrf_token %}
+        <p>Patient ID: {{form.patientID}}</p>
+        <button type="submit" class="save btn btn-default">Look up</button>
+    {% endif %}
+
+
+{% for patient in patient %}
+<div id="ProfilePage">
+    <div id="LeftCol">
+        <div id="Photo">
+          <p class = "profile_img"><img src="{{ patient.profilePic.url}}" width="240" alt="Smiley face"  ></p>
+        </div>
+        <div id="ProfileOptions">
+        a
+        </div>
+    </div>
+
+    <div id="Info">
+        <p>
+            <strong>Name:</strong>
+            <span>{{patient.firstname}} {{patient.lastname}}</span>
+        </p>
+        <p>
+            <strong>Patient ID:</strong>
+            <span>{{patient.id}}</span>
+        </p>
+        <p>
+            <strong>Gender:</strong>
+            <span>{{patient.gender}}</span>
+        </p>
+        <p>
+            <strong>DOB:</strong>
+            <span>{{patient.dateOfBirth}}</span>
+        </p>
+        <p>
+            <strong>SSN:</strong>
+            <span>{{patient.ssn}}</span>
+        </p>
+        <p>
+            <strong>Address:</strong>
+            <span>{{patient.address}} {{patient.city}}  {{patient.state}} {{patient.zip}}</span>
+        </p>
+        <p>
+            <strong>Phone:</strong>
+            <span>{{patient.phone}}</span>
+        </p>
+
+            <div class="container" style="margin-top: 100px">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+			       			<th width="5%">ID</th>
+	        				<th width="20%">Name</th>
+	            			<th width="12%">Doctor</th>
+	            			<th width="20%">Insurance Name</th>
+	            			<th width="20%">Insurance ID</th>
+                            <th width="20%">Contact Number</th>
+						</tr>
+					</thead>
+						{% for insurances in insurance %}
+						<tr>
+	              			<th scope="row">{{insurances.patient.id}}</th>
+	             			<td>{{insurances.patient.firstname}} {{insurance.patient.lastname}}</td>
+	              			<td>{{insurances.doctor}} </td>
+							<td>{{insurances.companyName}}</td>
+							<td>{{insurances.insID}}</td>
+							<td>{{insurances.contactNum}}</td>
+	            		</tr>
+	            		{% endfor %}
+				</table>
+			</div>
+
+    </div>
+
+    <!-- Needed because other elements inside ProfilePage have floats -->
+    <div style="clear:both"></div>
+</div>
+{% endfor %}
+{% else %}
+    <p>Not logged in right</p>
+{% endif %}
+{% endblock %}

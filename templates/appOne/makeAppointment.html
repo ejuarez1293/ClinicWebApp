@@ -1,0 +1,33 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+
+{% block body_block %}
+
+
+
+
+  <div class="container">
+    <div class="jumbotron">
+    <h1> New Appointment</h1>
+      <form method="POST" class="post-form">
+        {% csrf_token %}
+        <p>Date: {{form.date}}</p>
+        <p>Time: {{form.time}}</p>
+        <p>Patient: {{form.patient}}</p>
+        <p>Doctor: {{form.doctor}}</p>
+        <p>Comments: {{form.comments}}</p>
+        <button type="submit" class="save btn btn-default">save</button>
+      </form>
+    </div>
+  </div>
+
+<script>
+
+
+
+</script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+
+
+
+{% block body_block %}
+{% csrf_token %}
+{% if user.is_authenticated %}
+    <div class="page-header">
+        <h1>Welcome, {{ user.get_username }} </h1>
+    </div>
+
+
+    {% if request.user.is_staff %}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+      <p>Patient ID: {{form.patientID}}</p>
+      <button type="submit" class="save btn btn-default">Look up</button>
+        {% endif %}
+
+
+
+{% for patient in patient %}
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+					{% if patient.profilePic%}
+           					 <p class = "profile_img"><img src="{{ patient.profilePic.url}}" width="240" alt="Smiley face"  ></p>
+        					{% else %}
+       						 <img src="Media/profile_pics/noprofileimage.gif" >
+       		 {% endif %}
+				</div>
+				<!-- END SIDEBAR USERPIC -->
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+
+					</div>
+					<div class ="get_user_info" >
+        						<p>Name: {{patient.firstname}} {{patient.lastname}} </p>
+       						 <p>PatientID: {{patient.id}}</p>
+       						 <p>Address: {{patient.address}} {{patient.city}}  {{patient.state}} {{patient.zip}}</p>
+        						<p>Phone: {{patient.phone}}</p>
+        					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR BUTTONS -->
+
+
+
+				<!-- END SIDEBAR BUTTONS -->
+				<!-- SIDEBAR MENU -->
+
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active">
+							<a href="#">
+							<i class="glyphicon glyphicon-home"></i>
+							Overview </a>
+						</li>
+						<li>
+							<a href="{% url 'viewProfile' %}">
+							<i class="glyphicon glyphicon-user"></i>
+              View Profile</a>
+						</li>
+						<li>
+							<a href="#">
+							<i class="glyphicon glyphicon-flag"></i>
+							Help </a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+			</div>
+		</div>
+
+		<div class="col-md-9">
+            <div class="profile-content">
+			     <div class="panel panel-default" id="appointments">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Appointments</div>
+
+             <!-- Table -->
+             <table class="table">
+
+              </table>
+      <table class="table table-bordered">
+        <!--<caption style="font-weight: bold; color: black;border-bottom: solid black 1px">{{appointment.date|date:"l, F d, o" }}</caption> -->
+          <thead>
+            <tr>
+            <th width="23%">Name</th>
+            <th width="15%">Date</th>
+            <th width="10%">Time</th>
+            <th width="20%">Doctor</th>
+            <th>Comments</th>
+          </tr>
+          <tbody>
+      {% for appointment in appointments %}
+            <tr style="background-color: #fff2e6">
+              <td>{{appointment.patient.firstname}} {{appointment.patient.lastname}}</td>
+              <td>{{appointment.date}}</td>
+              <td>{{appointment.time|time:"g:i A"}}</td>
+              <td>{{appointment.doctor}}</td>
+              <td>{{appointment.comments}}</td>
+            </tr>
+        {% endfor %}
+
+      </table>
+    </div>
+        </tbody>
+        </thead>
+      </table>
+
+       <div class="panel panel-default" id="prescriptions">
+           <div class="panel-heading">Prescriptions</div>
+
+               <table class="table table-bordered">
+                   <thead>
+                     <tr style="background-color: #ccff99">
+                     <th width="20%">Medication</th>
+                     <th width="12%">Date</th>
+                     <th width="10%">Quantity</th>
+                     <th width="10%">Dosage</th>
+                     <th width="10%">Days</th>
+                     <th width="12%">Refill Count</th>
+                     <th width="26%">Doctor</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                 {% for prescription in prescriptions %}
+                 <tr style="background-color: #f2ffe6">
+                   <td>{{prescription.medication}}</td>
+                   <td>{{prescription.date}}</td>
+                   <td>{{prescription.quantity}}</td>
+                   <td>{{prescription.dosage}} mg</td>
+                   <td>{{prescription.length}}</td>
+                   <td>{{prescription.refill_count}}</td>
+                   <td>{{prescription.doctor}}</td>
+                 </tr>
+                 {% endfor %}
+                 </tbody>
+               </table>
+           </div>
+
+     </div>
+
+     <br>
+     <br>
+     <br>
+     <br>
+     <div class="panel panel-default">
+         <div class="panel-body">
+             <p class = "panel_glyphs"><span class="glyphicon glyphicon-list-alt"></span> Medical Records</p>
+         </div>
+         <p class="text-right"><a  href="{% url 'view_medicalcharts' %}">View Medical Records</a></p>
+     </div>
+     <div class="alert alert-danger" role="alert">
+             <strong>Important!</strong> Make sure to log out after reviewing Medical Records.
+     </div>
+
+
+
+     <div class="panel panel-default" id="prescriptions">
+           <div class="panel-heading">Bills</div>
+
+               <table class="table table-bordered">
+                   <thead>
+                     <tr style="background-color: #ccff99">
+                     <th width="23%">Name</th>
+                         <th width="25%">Procedure</th>
+           			 <th width="20%">Doctor</th>
+            		<th width="15%">Date</th>
+           			<th width="10%">Amount</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                {% for billingLogs in billingLogs %}
+            		<tr style="background-color: #fff2e6">
+             		 <td>{{billingLogs.patient.firstname}} {{billingLogs.patient.lastname}}</td>
+             		 <td>{{billingLogs.procedure}}</td>
+                        <td>{{billingLogs.date}}</td>
+             		 <td>{{billingLogs.doctor}}</td>
+             		 <td>${{billingLogs.amount}}</td>
+                 </tr>
+                 {% endfor %}
+                 </tbody>
+               </table>
+     	</div>
+
+
+</div>
+</div>
+</div>
+
+{% endfor %}
+
+
+{% else %}
+    <p>Not logged in right</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "appOne/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+<h1>Medical Chart</h1>
+  <div class="container">
+    <div class="jumbotron">
+      {% if registered %}
+        <h1>Medical Chart Entered!</h1>
+      {% else %}
+
+
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+
+        <p> Date: {{ medical_chart_form.date }} </p>
+        <p> Patient: {{ medical_chart_form.patient }} </p>
+        <p> Doctor: {{ medical_chart_form.doctor }} </p>
+        <p> Reason for visit: {{ medical_chart_form.reason_for_visit }} </p>
+          <h1>STAFF ONLY</h1>
+        <p> Height:{{ medical_chart_form.height }} </p>
+        <p> Weight: {{ medical_chart_form.weight }} </p>
+        <p> Temperature: {{ medical_chart_form.temperature }} </p>
+        <p> Pulse: {{ medical_chart_form.pulse }} </p>
+          <p> Blood Pressure: {{ medical_chart_form.blood_pressure }} </p>
+        <p> Diagnosis: {{ medical_chart_form.diagnosis }} </p>
+        <p> Additional Notes: {{ medical_chart_form.additionalNotes }} </p>
+
+          <input type="submit" name="" value="Register">
+        </form>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+{% endblock %}
